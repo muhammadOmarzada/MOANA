@@ -25,88 +25,101 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-1 xl:gap-2 text-[13px] font-semibold text-[#05272E] uppercase tracking-wide">
+        <nav className="hidden lg:flex items-center gap-1 xl:gap-3 text-[13px] font-bold text-[#05272E] uppercase tracking-wider">
+          {/* 1. HOME */}
           <Link
             href="/"
             className="bg-[#05272E] text-white px-4 py-2 rounded-full transition-all"
           >
-            Home
+            HOME
           </Link>
 
-          {/* Tour Option Dropdown */}
+          {/* 2. OUR TOUR (Dropdown) */}
           <div
             className="relative"
             onMouseEnter={() => setTourDropdownOpen(true)}
             onMouseLeave={() => setTourDropdownOpen(false)}
           >
             <button className="px-3 py-2 hover:text-moana-teal transition-colors flex items-center gap-1 cursor-pointer">
-              <span>Tour Option</span>
+              <span>OUR TOUR</span>
               <svg className="w-3.5 h-3.5 fill-current opacity-70" viewBox="0 0 20 20">
                 <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
               </svg>
             </button>
             {tourDropdownOpen && (
-              <div className="absolute top-full left-0 w-48 bg-white border border-gray-100 shadow-lg rounded-xl py-2 z-50">
-                <Link
-                  href="/tourina"
-                  className="block px-4 py-2 text-xs hover:bg-[#FAF7F2] hover:text-[#E05A36] text-[#E05A36] font-bold"
-                >
-                  Indonesia
-                </Link>
+              <div className="absolute top-full left-0 w-52 bg-white border border-gray-100 shadow-xl rounded-2xl py-2.5 z-50">
                 <Link
                   href="/tour"
-                  className="block px-4 py-2 text-xs hover:bg-[#FAF7F2] hover:text-[#E05A36] text-[#E05A36] font-bold"
+                  className="block px-4 py-2 text-xs hover:bg-[#FAF7F2] text-[#05272E] hover:text-moana-teal font-bold transition-colors"
                 >
-                  English
+                  ENGLISH TOUR
+                </Link>
+                <Link
+                  href="/tourina"
+                  className="block px-4 py-2 text-xs hover:bg-[#FAF7F2] text-[#05272E] hover:text-moana-teal font-bold transition-colors"
+                >
+                  INDONESIAN TOUR
+                </Link>
+                <Link
+                  href="/corporate"
+                  className="block px-4 py-2 text-xs hover:bg-[#FAF7F2] text-[#05272E] hover:text-moana-teal font-bold transition-colors"
+                >
+                  CORPORATE TOUR
                 </Link>
               </div>
             )}
           </div>
 
-          {/* About Us Dropdown */}
+          {/* 3. ABOUT US (Dropdown) */}
           <div
             className="relative"
             onMouseEnter={() => setAboutDropdownOpen(true)}
             onMouseLeave={() => setAboutDropdownOpen(false)}
           >
             <button className="px-3 py-2 hover:text-moana-teal transition-colors flex items-center gap-1 cursor-pointer">
-              <span>About Us</span>
+              <span>ABOUT US</span>
               <svg className="w-3.5 h-3.5 fill-current opacity-70" viewBox="0 0 20 20">
                 <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
               </svg>
             </button>
             {aboutDropdownOpen && (
-              <div className="absolute top-full left-0 w-56 bg-white border border-gray-100 shadow-lg rounded-xl py-2 z-50">
-                <Link href="/about" className="block px-4 py-2 text-xs hover:bg-[#FAF7F2] hover:text-[#E05A36] text-gray-700">
-                  About Us
+              <div className="absolute top-full left-0 w-64 bg-white border border-gray-100 shadow-xl rounded-2xl py-2.5 z-50">
+                <Link
+                  href="/about"
+                  className="block px-4 py-2 text-xs hover:bg-[#FAF7F2] text-[#05272E] hover:text-moana-teal font-bold transition-colors"
+                >
+                  ABOUT US
                 </Link>
-                <Link href="/about#location" className="block px-4 py-2 text-xs hover:bg-[#FAF7F2] hover:text-[#E05A36] text-[#E05A36]">
-                  Location
-                </Link>
-                <Link href="/faq" className="block px-4 py-2 text-xs hover:bg-[#FAF7F2] hover:text-[#E05A36] text-[#E05A36]">
+                <Link
+                  href="/faq"
+                  className="block px-4 py-2 text-xs hover:bg-[#FAF7F2] text-[#05272E] hover:text-moana-teal font-bold transition-colors"
+                >
                   FAQ
                 </Link>
-                <Link href="/terms" className="block px-4 py-2 text-xs hover:bg-[#FAF7F2] hover:text-[#E05A36] text-[#E05A36]">
-                  T&C
+                <Link
+                  href="/terms"
+                  className="block px-4 py-2 text-xs hover:bg-[#FAF7F2] text-[#05272E] hover:text-moana-teal font-bold transition-colors"
+                >
+                  TNC
                 </Link>
-                <Link href="/policy" className="block px-4 py-2 text-xs hover:bg-[#FAF7F2] hover:text-[#E05A36] text-[#E05A36]">
-                  Sustainable Tourism Policy
-                </Link>
-                <Link href="/tips" className="block px-4 py-2 text-xs hover:bg-[#FAF7F2] hover:text-[#E05A36] text-[#E05A36]">
-                  Bike Riding Basic Tips
+                <Link
+                  href="/policy"
+                  className="block px-4 py-2 text-xs hover:bg-[#FAF7F2] text-[#05272E] hover:text-moana-teal font-bold transition-colors"
+                >
+                  SUSTAINABLE TOURISM POLICY
                 </Link>
               </div>
             )}
           </div>
 
+          {/* 4. GALLERY */}
           <Link href="/gallery" className="px-3 py-2 hover:text-moana-teal transition-colors">
-            Gallery
+            GALLERY
           </Link>
-          <Link href="/blog" className="px-3 py-2 hover:text-moana-teal transition-colors">
-            Blog
-          </Link>
+
+          {/* 5. CONTACT US */}
           <Link href="/contact" className="px-3 py-2 hover:text-moana-teal transition-colors">
-            Contact Us
+            CONTACT US
           </Link>
         </nav>
 
@@ -116,9 +129,9 @@ export default function Navbar() {
             href="https://globaltix.com/moana"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-[#2EACAD] hover:bg-[#259798] text-white px-5 py-2.5 rounded-lg text-xs md:text-sm font-bold tracking-wide transition-colors shadow-xs"
+            className="bg-[#2EACAD] hover:bg-[#259798] text-white px-5 py-2.5 rounded-lg text-xs md:text-sm font-bold uppercase tracking-wider transition-colors shadow-xs"
           >
-            Check Availability
+            CHECK AVAILABILITY
           </a>
         </div>
 
@@ -140,48 +153,57 @@ export default function Navbar() {
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-white border-t border-gray-100 px-6 py-4 space-y-3 text-sm font-semibold text-[#05272E]">
-          <Link href="/" className="block py-2 text-moana-teal" onClick={() => setMobileMenuOpen(false)}>
-            Home
+        <div className="lg:hidden bg-white border-t border-gray-100 px-6 py-5 space-y-4 text-xs font-bold text-[#05272E] uppercase tracking-wider">
+          <Link href="/" className="block py-1.5 text-moana-teal" onClick={() => setMobileMenuOpen(false)}>
+            1. HOME
           </Link>
-          <div className="border-t border-gray-100 pt-2">
-            <span className="text-xs uppercase text-gray-400">Tour Option</span>
-            <Link href="/tourina" className="block py-1.5 pl-3 text-[#E05A36]" onClick={() => setMobileMenuOpen(false)}>
-              Indonesia Tour
+
+          <div className="border-t border-gray-100 pt-3">
+            <span className="text-[11px] text-gray-400 block mb-1.5">2. OUR TOUR</span>
+            <Link href="/tour" className="block py-1.5 pl-3 hover:text-moana-teal" onClick={() => setMobileMenuOpen(false)}>
+              2.1 ENGLISH TOUR
             </Link>
-            <Link href="/tour" className="block py-1.5 pl-3 text-[#E05A36]" onClick={() => setMobileMenuOpen(false)}>
-              English Tour
+            <Link href="/tourina" className="block py-1.5 pl-3 hover:text-moana-teal" onClick={() => setMobileMenuOpen(false)}>
+              2.2 INDONESIAN TOUR
+            </Link>
+            <Link href="/corporate" className="block py-1.5 pl-3 hover:text-moana-teal" onClick={() => setMobileMenuOpen(false)}>
+              2.3 CORPORATE TOUR
             </Link>
           </div>
-          <div className="border-t border-gray-100 pt-2">
-            <span className="text-xs uppercase text-gray-400">About Us</span>
-            <Link href="/about" className="block py-1.5 pl-3" onClick={() => setMobileMenuOpen(false)}>
-              Our Story
+
+          <div className="border-t border-gray-100 pt-3">
+            <span className="text-[11px] text-gray-400 block mb-1.5">3. ABOUT US</span>
+            <Link href="/about" className="block py-1.5 pl-3 hover:text-moana-teal" onClick={() => setMobileMenuOpen(false)}>
+              3.1 ABOUT US
             </Link>
-            <Link href="/faq" className="block py-1.5 pl-3 text-[#E05A36]" onClick={() => setMobileMenuOpen(false)}>
-              FAQ
+            <Link href="/faq" className="block py-1.5 pl-3 hover:text-moana-teal" onClick={() => setMobileMenuOpen(false)}>
+              3.2 FAQ
             </Link>
-            <Link href="/terms" className="block py-1.5 pl-3 text-[#E05A36]" onClick={() => setMobileMenuOpen(false)}>
-              Terms & Conditions
+            <Link href="/terms" className="block py-1.5 pl-3 hover:text-moana-teal" onClick={() => setMobileMenuOpen(false)}>
+              3.3 TNC
+            </Link>
+            <Link href="/policy" className="block py-1.5 pl-3 hover:text-moana-teal" onClick={() => setMobileMenuOpen(false)}>
+              3.4 SUSTAINABLE TOURISM POLICY
             </Link>
           </div>
-          <Link href="/gallery" className="block py-2" onClick={() => setMobileMenuOpen(false)}>
-            Gallery
-          </Link>
-          <Link href="/blog" className="block py-2" onClick={() => setMobileMenuOpen(false)}>
-            Blog
-          </Link>
-          <Link href="/contact" className="block py-2" onClick={() => setMobileMenuOpen(false)}>
-            Contact Us
-          </Link>
+
+          <div className="border-t border-gray-100 pt-3 space-y-2">
+            <Link href="/gallery" className="block py-1.5 hover:text-moana-teal" onClick={() => setMobileMenuOpen(false)}>
+              4. GALLERY
+            </Link>
+            <Link href="/contact" className="block py-1.5 hover:text-moana-teal" onClick={() => setMobileMenuOpen(false)}>
+              5. CONTACT US
+            </Link>
+          </div>
+
           <div className="pt-2">
             <a
               href="https://globaltix.com/moana"
               target="_blank"
               rel="noopener noreferrer"
-              className="block text-center bg-moana-teal text-white py-2.5 rounded-lg font-bold"
+              className="block text-center bg-moana-teal text-white py-2.5 rounded-lg font-bold uppercase tracking-wider"
             >
-              Check Availability
+              CHECK AVAILABILITY
             </a>
           </div>
         </div>

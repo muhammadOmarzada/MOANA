@@ -1,5 +1,4 @@
 import React from 'react';
-import TopBar from '@/components/layout/TopBar';
 import Navbar from '@/components/layout/Navbar';
 import HeroSection from '@/components/home/HeroSection';
 import AboutConceptSection from '@/components/home/AboutConceptSection';
@@ -14,7 +13,6 @@ export default function HomePage() {
   return (
     <div className="min-h-screen flex flex-col bg-[#FBFEFF] text-[#05272E]">
       {/* 1. Header Area */}
-      <TopBar />
       <Navbar />
 
       {/* 2. Main Landing Page Sections */}
