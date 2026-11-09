@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+@theme {
+  --color-moana-teal: #2EACAD;
+  --color-moana-cyan: #2FE4E7;
+  --color-moana-yellow: #FFF6BA;
+  --color-moana-bg: #FBFEFF;
+  --color-moana-navy: #05272E;
+}

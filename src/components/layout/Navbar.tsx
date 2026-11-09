@@ -13,16 +13,15 @@ export default function Navbar() {
     <header className="sticky top-0 z-40 bg-white shadow-xs border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-3.5 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 group">
-          <div className="relative w-44 md:w-56 h-11">
-            <Image
-              src="/images/logo/moana-logo.png"
-              alt="MOANA - Sustainable Cycling Tour Yogyakarta"
-              fill
-              className="object-contain object-left"
-              priority
-            />
-          </div>
+        <Link href="/" className="flex items-center gap-2 group shrink-0">
+          <Image
+            src="/images/logo/moana-logo.png"
+            alt="MOANA - Sustainable Cycling Tour Yogyakarta"
+            width={220}
+            height={48}
+            className="h-10 sm:h-12 w-auto object-contain object-left"
+            priority
+          />
         </Link>
 
         {/* Desktop Navigation */}
