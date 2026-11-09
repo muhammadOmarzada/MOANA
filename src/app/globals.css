@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+:root {
+  --moana-teal: #2EACAD;
+  --moana-cyan: #2FE4E7;
+  --moana-yellow: #FFF6BA;
+  --moana-bg: #FBFEFF;
+  --moana-navy: #05272E;
+}
+
+@layer utilities {
+  .bg-moana-teal { background-color: #2EACAD; }
+  .text-moana-teal { color: #2EACAD; }
+  .border-moana-teal { border-color: #2EACAD; }
+
+  .bg-moana-cyan { background-color: #2FE4E7; }
+  .text-moana-cyan { color: #2FE4E7; }
+  .border-moana-cyan { border-color: #2FE4E7; }
+
+  .bg-moana-yellow { background-color: #FFF6BA; }
+  .text-moana-yellow { color: #FFF6BA; }
+  .border-moana-yellow { border-color: #FFF6BA; }
+
+  .bg-moana-bg { background-color: #FBFEFF; }
+  .text-moana-navy { color: #05272E; }
+  .bg-moana-navy { background-color: #05272E; }
+
+  .font-handwriting { font-family: "Mansalva", cursive, sans-serif; }
+  .font-sans { font-family: "Lato", sans-serif; }
+}
+
+body {
+  background-color: var(--moana-bg);
+  color: var(--moana-navy);
+  font-family: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
