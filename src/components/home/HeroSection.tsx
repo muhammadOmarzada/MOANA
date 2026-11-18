@@ -1,158 +1,132 @@
 'use client';
 
-import React, { useState } from 'react';
-import Link from 'next/link';
+import React from 'react';
+import Image from 'next/image';
+
+const heroImages = [
+  {
+    src: '/images/hero/moana-cyclists.jpg',
+    alt: 'Wisata Bersepeda Moana di Sawah Nanggulan',
+  },
+  {
+    src: '/images/hero/moana-kotagede-heritage.jpg',
+    alt: 'Pesepeda Moana Berlatar Gerbang Candi Bersejarah Kotagede',
+  },
+  {
+    src: '/images/hero/moana-hero-3.jpg',
+    alt: 'Rombongan Tur Sepeda di Jembatan Pedesaan',
+  },
+  {
+    src: '/images/hero/moana-kraton-naga.jpg',
+    alt: 'Wisatawan Bersepeda di Pelataran Bangsal Naga Keraton Yogyakarta',
+  },
+  {
+    src: '/images/hero/moana-hero-5.jpg',
+    alt: 'Interaksi Hangat Wisatawan Bersama Pemandu Lokal',
+  },
+];
 
 export default function HeroSection() {
-  const [activeSlide, setActiveSlide] = useState(0);
-
-  const slides = [
-    {
-      title: 'Village Cycling Tour',
-      tagline: 'for a meaningful journey!',
-      badgeText: 'menoreh village cycling',
-      exploreText: 'Explore Jogja in Authentic Way',
-      bookUrl: 'https://wa.me/6282333918990?text=Halo%20Moana,%20saya%20ingin%20booking%20Village%20Cycling%20Tour',
-      seeOtherUrl: '/tourina',
-      image: 'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?q=80&w=1600&auto=format&fit=crop', // Lush countryside cycling
-    },
-    {
-      title: 'Jogja Hidden Gems',
-      tagline: 'beyond standard tourist tracks!',
-      badgeText: 'jogja hidden gems cycling',
-      exploreText: 'Discover Secret Heritage Corners',
-      bookUrl: 'https://wa.me/6282333918990?text=Halo%20Moana,%20saya%20ingin%20booking%20Jogja%20Hidden%20Gems',
-      seeOtherUrl: '/tour',
-      image: 'https://images.unsplash.com/photo-1584810359583-96fc3448beaa?q=80&w=1600&auto=format&fit=crop', // Historic heritage
+  const scrollToSection = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
     }
-  ];
-
-  const current = slides[activeSlide];
-
-  const handleNext = () => {
-    setActiveSlide((prev) => (prev + 1) % slides.length);
-  };
-
-  const handlePrev = () => {
-    setActiveSlide((prev) => (prev - 1 + slides.length) % slides.length);
   };
 
   return (
-    <section className="relative px-3 sm:px-6 md:px-8 pt-4 pb-10">
-      <div className="max-w-7xl mx-auto">
-        <div className="relative flex flex-col lg:flex-row overflow-hidden rounded-3xl shadow-xl min-h-[460px] lg:min-h-[520px]">
+    <section className="relative px-3 sm:px-6 lg:px-8 py-4 sm:py-6 bg-[#FBFEFF]">
+      <div className="relative max-w-7xl mx-auto">
+        {/* Main Hero Banner: 100% Solid Opacity Teal Box on left, uniform running marquee on right */}
+        <div className="relative w-full rounded-2xl md:rounded-3xl overflow-hidden bg-[#FBFEFF] flex flex-col-reverse md:flex-row h-auto md:h-[460px] lg:h-[490px] xl:h-[510px]">
           
-          {/* Left Orange Decorative Border Strip */}
-          <div className="hidden sm:block absolute left-0 top-0 bottom-0 w-3.5 bg-[#E05A36] z-20">
-            <div className="h-full w-full opacity-30 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:6px_6px]" />
-          </div>
-
-          {/* Left Teal Column */}
-          <div className="w-full lg:w-[38%] bg-[#2EACAD] text-white p-8 sm:p-10 lg:p-12 sm:pl-12 flex flex-col justify-between relative z-10">
-            {/* Main Headline & Subtitle */}
-            <div className="space-y-4">
-              <h1 className="text-4xl sm:text-5xl font-black tracking-tight leading-[1.1] font-sans">
-                {current.title}
+          {/* Left Content Area: Solid 100% Opacity Teal Box */}
+          <div className="relative z-20 w-full md:w-[45%] lg:w-[40%] xl:w-[38%] px-6 sm:px-8 lg:px-12 pt-8 sm:pt-10 md:pt-12 pb-24 sm:pb-28 md:pb-32 flex flex-col justify-start bg-[#2EACAD] shrink-0 text-white">
+            <div className="space-y-4 sm:space-y-5 max-w-lg">
+              {/* Heading: Lato font in all-caps uppercase */}
+              <h1 className="font-sans text-2xl sm:text-3xl md:text-3xl lg:text-[36px] xl:text-[40px] font-black uppercase text-white tracking-tight leading-[1.14]">
+                A Different Way to Discover <span className="text-[#FFF6BA]">Yogyakarta</span>
               </h1>
-              <p className="mansalva-regular text-2xl sm:text-3xl text-white/95">
-                {current.tagline}
+
+              {/* Subheading: Mansalva font with natural capitalization */}
+              <p className="mansalva-regular text-xs sm:text-sm md:text-[14px] lg:text-[15px] xl:text-[15px] text-white/90 leading-relaxed tracking-wide">
+                More than just a cycling journey. Explore the heart of Yogyakarta through slow travel, meaningful connections, and sustainable experiences.
               </p>
-
-              {/* Action Buttons */}
-              <div className="pt-4 flex flex-wrap items-center gap-3">
-                <a
-                  href={current.bookUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-[#05272E] hover:bg-[#083b46] text-white text-xs sm:text-sm font-bold tracking-wider uppercase px-6 py-3 rounded-lg shadow-md transition-all transform hover:-translate-y-0.5"
-                >
-                  Book Now
-                </a>
-                <Link
-                  href={current.seeOtherUrl}
-                  className="bg-[#FFF6BA] hover:bg-[#ffef94] text-[#05272E] text-xs sm:text-sm font-bold px-6 py-3 rounded-lg shadow-md transition-all flex items-center gap-1.5 transform hover:-translate-y-0.5"
-                >
-                  <span>See other tour</span>
-                  <span>→</span>
-                </Link>
-              </div>
-            </div>
-
-            {/* Bottom Left Hand-drawn Cyclist Silhouette / Doodle */}
-            <div className="mt-8 pt-4 flex items-end">
-              <svg
-                className="w-20 h-20 text-white/80 opacity-90"
-                viewBox="0 0 100 100"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                {/* Stylized woman with bicycle line-art */}
-                <circle cx="28" cy="70" r="18" strokeDasharray="3 2" />
-                <circle cx="72" cy="70" r="18" strokeDasharray="3 2" />
-                <path d="M28 70 L48 70 L62 52 L42 52 Z" />
-                <path d="M48 70 L55 42 L65 42" />
-                <path d="M72 70 L62 52" />
-                <circle cx="58" cy="28" r="6" />
-                <path d="M58 34 C58 40 52 46 48 54" />
-                <path d="M58 38 L68 45" />
-              </svg>
             </div>
           </div>
 
-          {/* Right Hero Image & Visual Storytelling */}
-          <div className="w-full lg:w-[62%] relative bg-gray-100 min-h-[340px] lg:min-h-[520px]">
-            {/* Background Image with soft gradient */}
-            <div
-              className="absolute inset-0 bg-cover bg-center transition-all duration-700"
-              style={{ backgroundImage: `url('${current.image}')` }}
-            >
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/10" />
-            </div>
+          {/* Running Images Marquee Track (Right / Top) */}
+          <div className="relative md:flex-1 h-[280px] sm:h-[320px] md:h-full overflow-hidden cursor-grab active:cursor-grabbing bg-[#197680] flex items-center">
+            <div className="animate-marquee h-full flex items-center py-0">
+              {/* Set 1 of 5 Images - Full Card Image with zero white borders */}
+              <div className="flex shrink-0 gap-3 sm:gap-4 md:gap-5 pr-3 sm:pr-4 md:pr-5 items-center h-full py-3 sm:py-4 md:py-5">
+                {heroImages.map((img, idx) => (
+                  <div
+                    key={`hero-img-1-${idx}`}
+                    className="relative shrink-0 w-[290px] sm:w-[350px] md:w-[420px] lg:w-[480px] xl:w-[540px] h-full rounded-none overflow-hidden bg-[#197680]"
+                  >
+                    <Image
+                      src={img.src}
+                      alt={img.alt}
+                      fill
+                      className="object-cover object-center"
+                      sizes="(max-width: 768px) 350px, (max-width: 1200px) 480px, 540px"
+                      priority={idx < 2}
+                    />
+                  </div>
+                ))}
+              </div>
 
-            {/* Handwritten Top-Right Catchphrase */}
-            <div className="absolute top-8 right-8 z-10 text-right">
-              <span className="mansalva-regular text-2xl sm:text-3xl lg:text-4xl text-[#2EACAD] bg-white/80 backdrop-blur-xs px-4 py-1.5 rounded-2xl shadow-sm inline-block transform rotate-1">
-                {current.exploreText}
-              </span>
-            </div>
-
-            {/* Carousel Arrow Controls */}
-            <div className="absolute right-6 top-1/2 -translate-y-1/2 flex flex-col gap-2.5 z-20">
-              <button
-                onClick={handlePrev}
-                aria-label="Previous Slide"
-                className="w-10 h-10 rounded-full bg-white text-[#E05A36] hover:bg-[#E05A36] hover:text-white flex items-center justify-center shadow-lg transition-all transform hover:scale-105 cursor-pointer font-bold"
-              >
-                ‹
-              </button>
-              <button
-                onClick={handleNext}
-                aria-label="Next Slide"
-                className="w-10 h-10 rounded-full bg-white text-[#E05A36] hover:bg-[#E05A36] hover:text-white flex items-center justify-center shadow-lg transition-all transform hover:scale-105 cursor-pointer font-bold"
-              >
-                ›
-              </button>
-            </div>
-
-            {/* Slanted Green Tour Badge */}
-            <div className="absolute bottom-6 left-6 z-10">
-              <span className="inline-block bg-[#2EACAD] text-white px-5 py-2 rounded-xl text-sm sm:text-base font-bold shadow-md transform -rotate-2 uppercase tracking-wide">
-                {current.badgeText}
-              </span>
-            </div>
-
-            {/* TripAdvisor Travelers Choice Badges */}
-            <div className="absolute bottom-6 right-6 z-10 flex items-center gap-2 bg-black/40 backdrop-blur-xs px-3 py-1.5 rounded-xl border border-white/20 text-white">
-              <div className="text-center text-[10px] leading-tight">
-                <span className="font-bold block text-[#2FE4E7]">TripAdvisor</span>
-                <span className="text-white/80">Travelers&apos; Choice</span>
-                <span className="block font-black text-amber-300">2023 - 2025</span>
+              {/* Set 2 of 5 Images (Exact Duplicate for Seamless Loop) */}
+              <div className="flex shrink-0 gap-3 sm:gap-4 md:gap-5 pr-3 sm:pr-4 md:pr-5 items-center h-full py-3 sm:py-4 md:py-5" aria-hidden="true">
+                {heroImages.map((img, idx) => (
+                  <div
+                    key={`hero-img-2-${idx}`}
+                    className="relative shrink-0 w-[290px] sm:w-[350px] md:w-[420px] lg:w-[480px] xl:w-[540px] h-full rounded-none overflow-hidden bg-[#197680]"
+                  >
+                    <Image
+                      src={img.src}
+                      alt={img.alt}
+                      fill
+                      className="object-cover object-center"
+                      sizes="(max-width: 768px) 350px, (max-width: 1200px) 480px, 540px"
+                    />
+                  </div>
+                ))}
               </div>
             </div>
-
           </div>
+        </div>
 
+        {/* Carved Cutout Notch at Bottom-Left (Separated Button Container - Sibling to avoid subpixel clipping line) */}
+        <div className="absolute -bottom-1 -left-1 z-30 bg-[#FBFEFF] rounded-tr-2xl md:rounded-tr-3xl pt-2.5 sm:pt-3 pr-4 sm:pr-5 pb-3.5 sm:pb-4 pl-1 flex items-center w-fit pointer-events-auto">
+          {/* Top-Left Inverted Concave Curve (Matching Hero Card Corner Radius: 16px mobile, 24px desktop) */}
+          <svg
+            className="absolute -top-4 md:-top-6 left-1 w-4 h-4 md:w-6 md:h-6 text-[#FBFEFF] pointer-events-none overflow-visible"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <path d="M 0 0 L -6 0 L -6 30 L 30 30 L 24 24 A 24 24 0 0 1 0 0 Z" />
+          </svg>
+
+          {/* Bottom-Right Inverted Concave Curve */}
+          <svg
+            className="absolute -right-4 md:-right-6 bottom-1 w-4 h-4 md:w-6 md:h-6 text-[#FBFEFF] pointer-events-none overflow-visible"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <path d="M 0 0 L -6 0 L -6 30 L 30 30 L 24 24 A 24 24 0 0 1 0 0 Z" />
+          </svg>
+
+          {/* Pill Button - Flush to Left Edge, Aligned Right with Header "A" */}
+          <button
+            onClick={() => scrollToSection('tours')}
+            className="w-[240px] sm:w-[270px] md:w-[295px] lg:w-[315px] xl:w-[325px] bg-[#ff6900] hover:bg-[#e65e00] text-white font-sans text-xs sm:text-sm font-bold uppercase tracking-wider py-3.5 sm:py-4 rounded-full transition-colors duration-200 cursor-pointer flex items-center justify-center"
+          >
+            SEE OTHER TOURS
+          </button>
         </div>
       </div>
     </section>

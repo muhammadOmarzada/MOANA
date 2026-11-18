@@ -6,7 +6,7 @@ export default function VideoShowcaseSection() {
   const [isPlaying, setIsPlaying] = useState(false);
 
   return (
-    <section className="py-16 md:py-20 px-4 md:px-8 bg-[#FFF6BA]/70">
+    <section id="video" className="py-16 md:py-20 px-4 md:px-8 bg-[#FFF6BA]/70 scroll-mt-20">
       <div className="max-w-5xl mx-auto">
         
         {/* Header */}

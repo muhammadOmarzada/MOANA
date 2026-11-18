@@ -1,13 +1,123 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [tourDropdownOpen, setTourDropdownOpen] = useState(false);
   const [aboutDropdownOpen, setAboutDropdownOpen] = useState(false);
+
+  // Helper to determine active menu item from pathname
+  const getActiveKeyFromPath = (path: string): string => {
+    if (!path || path === '/') return 'home';
+    if (path.startsWith('/tour') || path.startsWith('/corporate')) return 'tour';
+    if (path.startsWith('/about') || path.startsWith('/faq') || path.startsWith('/terms') || path.startsWith('/policy')) return 'about';
+    if (path.startsWith('/gallery')) return 'gallery';
+    if (path.startsWith('/contact')) return 'contact';
+    return 'home';
+  };
+
+  const [selectedKey, setSelectedKey] = useState<string>('home');
+  const [activeHover, setActiveHover] = useState<string | null>(null);
+  const [isReady, setIsReady] = useState(false);
+
+  // Sliding Pill Indicator coordinates & dimensions
+  const [pillStyle, setPillStyle] = useState({
+    left: 0,
+    top: 0,
+    width: 0,
+    height: 0,
+    opacity: 0,
+  });
+
+  const navRefs = useRef<Record<string, HTMLElement | null>>({});
+
+  // Sync selectedKey with route pathname
+  useEffect(() => {
+    const key = getActiveKeyFromPath(pathname);
+    setSelectedKey(key);
+  }, [pathname]);
+
+  const updatePillTo = (key: string) => {
+    const el = navRefs.current[key];
+    if (el && el.offsetWidth > 0) {
+      setPillStyle({
+        left: el.offsetLeft,
+        top: el.offsetTop,
+        width: el.offsetWidth,
+        height: el.offsetHeight,
+        opacity: 1,
+      });
+    }
+  };
+
+  // Mount effect: calculate initial pill position for the active page and enable animations
+  useEffect(() => {
+    updatePillTo(selectedKey);
+    const timer = setTimeout(() => {
+      setIsReady(true);
+    }, 50);
+    return () => clearTimeout(timer);
+  }, []); // Run ONLY once on mount
+
+  // Update pill position when activeHover or selectedKey changes
+  useEffect(() => {
+    const target = activeHover ?? selectedKey;
+    updatePillTo(target);
+  }, [selectedKey, activeHover]);
+
+  // Window resize listener
+  useEffect(() => {
+    const handleResize = () => {
+      const target = activeHover ?? selectedKey;
+      updatePillTo(target);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [selectedKey, activeHover]);
+
+  // Handle font loading layout shifts
+  useEffect(() => {
+    if (typeof document !== 'undefined' && document.fonts) {
+      document.fonts.ready.then(() => {
+        const target = activeHover ?? selectedKey;
+        updatePillTo(target);
+      });
+    }
+  }, [selectedKey, activeHover]);
+
+  const handleMouseEnter = (el: HTMLElement, key: string) => {
+    setActiveHover(key);
+    setPillStyle({
+      left: el.offsetLeft,
+      top: el.offsetTop,
+      width: el.offsetWidth,
+      height: el.offsetHeight,
+      opacity: 1,
+    });
+  };
+
+  const handleMouseLeaveNav = () => {
+    setActiveHover(null);
+    updatePillTo(selectedKey);
+  };
+
+  const handleItemClick = (key: string) => {
+    setSelectedKey(key);
+    updatePillTo(key);
+  };
+
+  // Text is white if hovered, or if active item when no item is hovered
+  const isItemActive = (key: string) => {
+    if (activeHover !== null) {
+      return activeHover === key;
+    }
+    return selectedKey === key;
+  };
 
   return (
     <header className="sticky top-0 z-40 bg-white shadow-xs border-b border-gray-100">
@@ -25,22 +135,57 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-1 xl:gap-3 text-[13px] font-bold text-[#05272E] uppercase tracking-wider">
+        <nav
+          onMouseLeave={handleMouseLeaveNav}
+          className="relative hidden lg:flex items-center gap-1 xl:gap-2 text-[13px] font-bold uppercase tracking-wider py-1"
+        >
+          {/* Sliding Pill Indicator */}
+          <div
+            className={`absolute rounded-full bg-[#197680] pointer-events-none ${
+              isReady ? 'transition-all duration-300 ease-out' : ''
+            }`}
+            style={{
+              left: `${pillStyle.left}px`,
+              top: `${pillStyle.top}px`,
+              width: `${pillStyle.width}px`,
+              height: `${pillStyle.height}px`,
+              opacity: pillStyle.opacity,
+            }}
+          />
+
           {/* 1. HOME */}
           <Link
+            ref={(el) => {
+              navRefs.current['home'] = el;
+            }}
             href="/"
-            className="bg-[#05272E] text-white px-4 py-2 rounded-full transition-all"
+            onClick={() => handleItemClick('home')}
+            onMouseEnter={(e) => handleMouseEnter(e.currentTarget, 'home')}
+            className={`relative z-10 px-4 py-2 rounded-full transition-colors duration-200 block ${
+              isItemActive('home') ? 'text-white' : 'text-[#05272E]'
+            }`}
           >
             HOME
           </Link>
 
           {/* 2. OUR TOUR (Dropdown) */}
           <div
+            ref={(el) => {
+              navRefs.current['tour'] = el;
+            }}
             className="relative"
-            onMouseEnter={() => setTourDropdownOpen(true)}
+            onMouseEnter={(e) => {
+              setTourDropdownOpen(true);
+              handleMouseEnter(e.currentTarget, 'tour');
+            }}
             onMouseLeave={() => setTourDropdownOpen(false)}
           >
-            <button className="px-3 py-2 hover:text-moana-teal transition-colors flex items-center gap-1 cursor-pointer">
+            <button
+              onClick={() => handleItemClick('tour')}
+              className={`relative z-10 px-3.5 py-2 rounded-full transition-colors duration-200 flex items-center gap-1 cursor-pointer ${
+                isItemActive('tour') ? 'text-white' : 'text-[#05272E]'
+              }`}
+            >
               <span>OUR TOUR</span>
               <svg className="w-3.5 h-3.5 fill-current opacity-70" viewBox="0 0 20 20">
                 <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
@@ -50,19 +195,22 @@ export default function Navbar() {
               <div className="absolute top-full left-0 w-52 bg-white border border-gray-100 shadow-xl rounded-2xl py-2.5 z-50">
                 <Link
                   href="/tour"
-                  className="block px-4 py-2 text-xs hover:bg-[#FAF7F2] text-[#05272E] hover:text-moana-teal font-bold transition-colors"
+                  onClick={() => handleItemClick('tour')}
+                  className="block px-4 py-2 text-xs hover:bg-[#197680] hover:text-white text-[#05272E] font-bold transition-colors rounded-lg mx-1.5"
                 >
                   ENGLISH TOUR
                 </Link>
                 <Link
                   href="/tourina"
-                  className="block px-4 py-2 text-xs hover:bg-[#FAF7F2] text-[#05272E] hover:text-moana-teal font-bold transition-colors"
+                  onClick={() => handleItemClick('tour')}
+                  className="block px-4 py-2 text-xs hover:bg-[#197680] hover:text-white text-[#05272E] font-bold transition-colors rounded-lg mx-1.5"
                 >
                   INDONESIAN TOUR
                 </Link>
                 <Link
                   href="/corporate"
-                  className="block px-4 py-2 text-xs hover:bg-[#FAF7F2] text-[#05272E] hover:text-moana-teal font-bold transition-colors"
+                  onClick={() => handleItemClick('tour')}
+                  className="block px-4 py-2 text-xs hover:bg-[#197680] hover:text-white text-[#05272E] font-bold transition-colors rounded-lg mx-1.5"
                 >
                   CORPORATE TOUR
                 </Link>
@@ -72,11 +220,22 @@ export default function Navbar() {
 
           {/* 3. ABOUT US (Dropdown) */}
           <div
+            ref={(el) => {
+              navRefs.current['about'] = el;
+            }}
             className="relative"
-            onMouseEnter={() => setAboutDropdownOpen(true)}
+            onMouseEnter={(e) => {
+              setAboutDropdownOpen(true);
+              handleMouseEnter(e.currentTarget, 'about');
+            }}
             onMouseLeave={() => setAboutDropdownOpen(false)}
           >
-            <button className="px-3 py-2 hover:text-moana-teal transition-colors flex items-center gap-1 cursor-pointer">
+            <button
+              onClick={() => handleItemClick('about')}
+              className={`relative z-10 px-3.5 py-2 rounded-full transition-colors duration-200 flex items-center gap-1 cursor-pointer ${
+                isItemActive('about') ? 'text-white' : 'text-[#05272E]'
+              }`}
+            >
               <span>ABOUT US</span>
               <svg className="w-3.5 h-3.5 fill-current opacity-70" viewBox="0 0 20 20">
                 <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
@@ -86,25 +245,29 @@ export default function Navbar() {
               <div className="absolute top-full left-0 w-64 bg-white border border-gray-100 shadow-xl rounded-2xl py-2.5 z-50">
                 <Link
                   href="/about"
-                  className="block px-4 py-2 text-xs hover:bg-[#FAF7F2] text-[#05272E] hover:text-moana-teal font-bold transition-colors"
+                  onClick={() => handleItemClick('about')}
+                  className="block px-4 py-2 text-xs hover:bg-[#197680] hover:text-white text-[#05272E] font-bold transition-colors rounded-lg mx-1.5"
                 >
                   ABOUT US
                 </Link>
                 <Link
                   href="/faq"
-                  className="block px-4 py-2 text-xs hover:bg-[#FAF7F2] text-[#05272E] hover:text-moana-teal font-bold transition-colors"
+                  onClick={() => handleItemClick('about')}
+                  className="block px-4 py-2 text-xs hover:bg-[#197680] hover:text-white text-[#05272E] font-bold transition-colors rounded-lg mx-1.5"
                 >
                   FAQ
                 </Link>
                 <Link
                   href="/terms"
-                  className="block px-4 py-2 text-xs hover:bg-[#FAF7F2] text-[#05272E] hover:text-moana-teal font-bold transition-colors"
+                  onClick={() => handleItemClick('about')}
+                  className="block px-4 py-2 text-xs hover:bg-[#197680] hover:text-white text-[#05272E] font-bold transition-colors rounded-lg mx-1.5"
                 >
                   TNC
                 </Link>
                 <Link
                   href="/policy"
-                  className="block px-4 py-2 text-xs hover:bg-[#FAF7F2] text-[#05272E] hover:text-moana-teal font-bold transition-colors"
+                  onClick={() => handleItemClick('about')}
+                  className="block px-4 py-2 text-xs hover:bg-[#197680] hover:text-white text-[#05272E] font-bold transition-colors rounded-lg mx-1.5"
                 >
                   SUSTAINABLE TOURISM POLICY
                 </Link>
@@ -113,27 +276,35 @@ export default function Navbar() {
           </div>
 
           {/* 4. GALLERY */}
-          <Link href="/gallery" className="px-3 py-2 hover:text-moana-teal transition-colors">
+          <Link
+            ref={(el) => {
+              navRefs.current['gallery'] = el;
+            }}
+            href="/gallery"
+            onClick={() => handleItemClick('gallery')}
+            onMouseEnter={(e) => handleMouseEnter(e.currentTarget, 'gallery')}
+            className={`relative z-10 px-4 py-2 rounded-full transition-colors duration-200 block ${
+              isItemActive('gallery') ? 'text-white' : 'text-[#05272E]'
+            }`}
+          >
             GALLERY
           </Link>
 
           {/* 5. CONTACT US */}
-          <Link href="/contact" className="px-3 py-2 hover:text-moana-teal transition-colors">
+          <Link
+            ref={(el) => {
+              navRefs.current['contact'] = el;
+            }}
+            href="/contact"
+            onClick={() => handleItemClick('contact')}
+            onMouseEnter={(e) => handleMouseEnter(e.currentTarget, 'contact')}
+            className={`relative z-10 px-4 py-2 rounded-full transition-colors duration-200 block ${
+              isItemActive('contact') ? 'text-white' : 'text-[#05272E]'
+            }`}
+          >
             CONTACT US
           </Link>
         </nav>
-
-        {/* Right CTA Button */}
-        <div className="hidden lg:flex items-center">
-          <a
-            href="https://globaltix.com/moana"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-[#2EACAD] hover:bg-[#259798] text-white px-5 py-2.5 rounded-lg text-xs md:text-sm font-bold uppercase tracking-wider transition-colors shadow-xs"
-          >
-            CHECK AVAILABILITY
-          </a>
-        </div>
 
         {/* Mobile Hamburger Button */}
         <button
@@ -194,17 +365,6 @@ export default function Navbar() {
             <Link href="/contact" className="block py-1.5 hover:text-moana-teal" onClick={() => setMobileMenuOpen(false)}>
               5. CONTACT US
             </Link>
-          </div>
-
-          <div className="pt-2">
-            <a
-              href="https://globaltix.com/moana"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block text-center bg-moana-teal text-white py-2.5 rounded-lg font-bold uppercase tracking-wider"
-            >
-              CHECK AVAILABILITY
-            </a>
           </div>
         </div>
       )}

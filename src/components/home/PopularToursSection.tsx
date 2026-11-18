@@ -33,7 +33,7 @@ export default function PopularToursSection() {
   ];
 
   return (
-    <section className="py-16 md:py-20 px-4 md:px-8 bg-[#ECEEF0]">
+    <section id="tours" className="py-16 md:py-20 px-4 md:px-8 bg-[#ECEEF0] scroll-mt-20">
       <div className="max-w-6xl mx-auto">
         
         {/* Section Header */}
