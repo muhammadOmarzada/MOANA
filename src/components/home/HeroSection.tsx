@@ -32,7 +32,7 @@ function PhotoTape({ id, rotation }: { id: string; rotation: number }) {
   const gradId = `tape-grad-${id}`;
   return (
     <div
-      className="absolute -top-3 sm:-top-3.5 md:-top-4 left-1/2 z-20 pointer-events-none w-[42%] max-w-[210px] min-w-[125px] aspect-[220/66]"
+      className="absolute -top-3 sm:-top-3.5 md:-top-4 left-1/2 z-20 pointer-events-none w-[42%] max-w-[190px] min-w-[115px] aspect-[220/66]"
       style={{
         transform: `translateX(-50%) rotate(${rotation}deg)`,
       }}
@@ -75,35 +75,54 @@ export default function HeroSection() {
   };
 
   return (
-    <section className="relative px-3 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8 bg-[#FBFEFF]">
-      <div className="relative max-w-7xl xl:max-w-[1360px] 2xl:max-w-[1420px] mx-auto">
+    <section className="relative px-3 sm:px-6 lg:px-8 py-3.5 sm:py-5 lg:py-6 bg-[#FBFEFF]">
+      <div className="relative max-w-7xl xl:max-w-[1300px] 2xl:max-w-[1360px] mx-auto">
         {/* Main Hero Banner: 100% Solid Opacity Teal Box on left, uniform running marquee on right */}
-        <div className="relative w-full rounded-2xl md:rounded-3xl overflow-hidden bg-[#FBFEFF] flex flex-col-reverse md:flex-row h-auto md:h-[540px] lg:h-[590px] xl:h-[630px] 2xl:h-[660px]">
+        <div className="relative w-full rounded-2xl md:rounded-3xl overflow-hidden bg-[#FBFEFF] flex flex-col-reverse md:flex-row h-auto md:h-[500px] lg:h-[540px] xl:h-[570px] 2xl:h-[600px]">
           
-          {/* Left Content Area: Solid 100% Opacity Teal Box */}
-          <div className="relative z-20 w-full md:w-[46%] lg:w-[42%] xl:w-[40%] px-6 sm:px-9 lg:px-12 xl:px-14 pt-8 sm:pt-12 md:pt-14 lg:pt-16 pb-26 sm:pb-30 md:pb-34 lg:pb-38 flex flex-col justify-start bg-[#2EACAD] shrink-0 text-white">
-            <div className="space-y-4 sm:space-y-5 max-w-lg xl:max-w-xl">
+          {/* Left Content Area: Solid 100% Opacity Deep Teal Box (#197680) with Topographic Contour Pattern (#2EACAD) */}
+          <div className="relative z-20 w-full md:w-[46%] lg:w-[42%] xl:w-[40%] px-6 sm:px-8 lg:px-10 xl:px-12 pt-7 sm:pt-10 md:pt-12 lg:pt-14 pb-22 sm:pb-26 md:pb-28 lg:pb-30 flex flex-col justify-start bg-[#197680] shrink-0 text-white overflow-hidden shadow-[0_-2px_8px_rgba(0,0,0,0.06)] md:shadow-[3px_0_10px_rgba(0,0,0,0.08)]">
+            {/* Topographic Contour Pattern Overlay */}
+            <div
+              className="absolute inset-0 pointer-events-none bg-cover bg-center opacity-85 z-0"
+              style={{
+                backgroundImage: "url('/images/hero/topographic-contour-pattern.svg')",
+              }}
+              aria-hidden="true"
+            />
+
+            <div className="relative z-10 space-y-3.5 sm:space-y-4 max-w-lg xl:max-w-xl">
               {/* Heading: Lato font in all-caps uppercase */}
-              <h1 className="font-sans text-2xl sm:text-3xl md:text-3xl lg:text-[40px] xl:text-[45px] 2xl:text-[48px] font-black uppercase text-white tracking-tight leading-[1.12]">
+              <h1 className="font-sans text-2xl sm:text-3xl md:text-3xl lg:text-[36px] xl:text-[40px] 2xl:text-[43px] font-black uppercase text-white tracking-tight leading-[1.12]">
                 A Different Way to Discover <span className="text-[#FFF6BA]">Yogyakarta</span>
               </h1>
 
               {/* Subheading: Mansalva font with natural capitalization */}
-              <p className="mansalva-regular text-xs sm:text-sm md:text-[14px] lg:text-[16px] xl:text-[17px] text-white/90 leading-relaxed tracking-wide">
+              <p className="mansalva-regular text-xs sm:text-sm md:text-[13px] lg:text-[15px] xl:text-[16px] text-white/90 leading-relaxed tracking-wide">
                 More than just a cycling journey. Explore the heart of Yogyakarta through slow travel, meaningful connections, and sustainable experiences.
               </p>
             </div>
           </div>
 
           {/* Running Images Marquee Track (Right / Top) */}
-          <div className="relative md:flex-1 h-[340px] sm:h-[400px] md:h-full overflow-hidden cursor-grab active:cursor-grabbing bg-[#197680] flex items-center">
+          <div className="relative md:flex-1 h-[310px] sm:h-[360px] md:h-full overflow-hidden cursor-grab active:cursor-grabbing bg-[#197680] flex items-center">
+            {/* Subtle Boundary Shadow Overlay (Light & Gentle depth transition) */}
+            <div
+              className="hidden md:block absolute top-0 left-0 bottom-0 w-5 lg:w-7 pointer-events-none z-30 bg-gradient-to-r from-black/15 via-black/05 to-transparent"
+              aria-hidden="true"
+            />
+            <div
+              className="md:hidden absolute bottom-0 left-0 right-0 h-5 sm:h-6 pointer-events-none z-30 bg-gradient-to-t from-black/12 via-black/04 to-transparent"
+              aria-hidden="true"
+            />
+
             <div className="animate-marquee h-full flex items-center py-0">
               {/* Set 1 of 5 Images - Polaroid Photo Paper Style with Adhesive Tape Overlay */}
               <div className="flex shrink-0 gap-3 sm:gap-4 md:gap-5 pr-3 sm:pr-4 md:pr-5 items-center h-full py-3.5 sm:py-4 md:py-5">
                 {heroImages.map((img, idx) => (
                   <div
                     key={`hero-img-1-${idx}`}
-                    className="relative shrink-0 w-[290px] sm:w-[360px] md:w-[430px] lg:w-[500px] xl:w-[570px] 2xl:w-[620px] h-full flex flex-col bg-white p-2.5 sm:p-3 md:p-3.5 pb-6 sm:pb-8 md:pb-10 rounded-none shadow-md overflow-visible"
+                    className="relative shrink-0 w-[270px] sm:w-[330px] md:w-[390px] lg:w-[450px] xl:w-[500px] 2xl:w-[540px] h-full flex flex-col bg-white p-2.5 sm:p-3 md:p-3 pb-5 sm:pb-7 md:pb-8 rounded-none shadow-md overflow-visible"
                   >
                     {/* Adhesive Tape Overlay on Top Edge */}
                     <PhotoTape id={`set1-${idx}`} rotation={tapeRotations[idx % tapeRotations.length]} />
@@ -127,7 +146,7 @@ export default function HeroSection() {
                 {heroImages.map((img, idx) => (
                   <div
                     key={`hero-img-2-${idx}`}
-                    className="relative shrink-0 w-[290px] sm:w-[360px] md:w-[430px] lg:w-[500px] xl:w-[570px] 2xl:w-[620px] h-full flex flex-col bg-white p-2.5 sm:p-3 md:p-3.5 pb-6 sm:pb-8 md:pb-10 rounded-none shadow-md overflow-visible"
+                    className="relative shrink-0 w-[270px] sm:w-[330px] md:w-[390px] lg:w-[450px] xl:w-[500px] 2xl:w-[540px] h-full flex flex-col bg-white p-2.5 sm:p-3 md:p-3 pb-5 sm:pb-7 md:pb-8 rounded-none shadow-md overflow-visible"
                   >
                     {/* Adhesive Tape Overlay on Top Edge */}
                     <PhotoTape id={`set2-${idx}`} rotation={tapeRotations[idx % tapeRotations.length]} />
@@ -173,7 +192,7 @@ export default function HeroSection() {
           {/* Pill Button - Flush to Left Edge, Aligned Right with Header "A" */}
           <button
             onClick={() => scrollToSection('tours')}
-            className="w-[250px] sm:w-[285px] md:w-[315px] lg:w-[340px] xl:w-[355px] bg-[#ff6900] hover:bg-[#e65e00] text-white font-sans text-xs sm:text-sm md:text-[15px] font-bold uppercase tracking-wider py-3.5 sm:py-4 xl:py-4.5 rounded-full transition-colors duration-200 cursor-pointer flex items-center justify-center"
+            className="w-[235px] sm:w-[265px] md:w-[290px] lg:w-[315px] xl:w-[330px] bg-[#ff6900] hover:bg-[#e65e00] text-white font-sans text-xs sm:text-sm md:text-[14px] font-bold uppercase tracking-wider py-3 sm:py-3.5 xl:py-4 rounded-full transition-colors duration-200 cursor-pointer flex items-center justify-center"
           >
             SEE OTHER TOURS
           </button>
